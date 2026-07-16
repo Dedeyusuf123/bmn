@@ -14,7 +14,9 @@ try {
     );
 
     if (!$conn) {
-        die('Koneksi database gagal: ' . mysqli_connect_error());
+        die(
+            'Koneksi database gagal: ' . mysqli_connect_error()
+        );
     }
 
     mysqli_set_charset($conn, 'utf8mb4');
@@ -22,5 +24,8 @@ try {
     ensure_app_schema($conn);
 
 } catch (Exception $e) {
-    die('Koneksi database gagal. Pastikan database sudah diimport dan konfigurasi koneksi (environment variable) benar. Detail: ' . $e->getMessage());
+    die(
+        'Koneksi database gagal. Pastikan database sudah diimport dan konfigurasi environment variable benar. Detail: '
+        . $e->getMessage()
+    );
 }
