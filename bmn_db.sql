@@ -13,7 +13,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE `barang` (
+CREATE TABLE IF NOT EXISTS `barang` (
   `id` int(11) NOT NULL,
   `kode_barang` varchar(50) DEFAULT NULL,
   `nup` varchar(50) DEFAULT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `barang` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -46,7 +46,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
 (2, 'pegawai', 'pegawai', 'pegawai'),
 (3, 'pimpinan', 'pimpinan', 'pimpinan');
 
-CREATE TABLE `laporan_kerusakan` (
+CREATE TABLE IF NOT EXISTS `laporan_kerusakan` (
   `id` int(11) NOT NULL,
   `barang_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
