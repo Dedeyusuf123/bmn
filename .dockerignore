@@ -1,19 +1,4 @@
-FROM php:8.2
-
-RUN apt-get update && apt-get install -y apache2 \
-    && docker-php-ext-install mysqli pdo pdo_mysql
-
-RUN a2enmod rewrite
-
-WORKDIR /var/www/html
-
-COPY . .
-
-RUN chown -R www-data:www-data /var/www/html/public/uploads
-
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-EXPOSE 8080
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+.git
+.gitignore
+node_modules
+vendor
