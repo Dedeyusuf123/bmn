@@ -1,18 +1,19 @@
 FROM php:8.2-apache
 
-# Ekstensi PHP yang dibutuhkan aplikasi (mysqli + pdo_mysql)
+# Install ekstensi PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Aktifkan mod_rewrite & izinkan .htaccess (DirectoryIndex, dsb.)
+# Aktifkan mod_rewrite TANPA restart Apache
 RUN a2enmod rewrite \
-    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
+    && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
+    && rm -f /var/run/apache2/apache2.pid
 
 WORKDIR /var/www/html
 
-# Salin seluruh source aplikasi
+# Salin source code
 COPY . /var/www/html/
 
-# Batasi akses langsung ke folder/berkas internal (hanya boleh diakses lewat include PHP)
+# Proteksi folder internal
 RUN { \
     echo '<Directory /var/www/html/app>'; \
     echo '  Require all denied'; \
@@ -26,30 +27,17 @@ RUN { \
     echo '<Directory /var/www/html/view>'; \
     echo '  Require all denied'; \
     echo '</Directory>'; \
-    echo '<Files "koneksi.php">'; \
-    echo '  Require all denied'; \
-    echo '</Files>'; \
-    echo '<Files "db_env.php">'; \
-    echo '  Require all denied'; \
-    echo '</Files>'; \
-    echo '<Files "helpers.php">'; \
-    echo '  Require all denied'; \
-    echo '</Files>'; \
-    echo '<Files "bmn_db.sql">'; \
-    echo '  Require all denied'; \
-    echo '</Files>'; \
-    echo '<Files "README_INSTALASI.txt">'; \
-    echo '  Require all denied'; \
-    echo '</Files>'; \
     } > /etc/apache2/conf-available/appsecurity.conf \
-    && a2enconf appsecurity
+    && a2enconf appsecurity \
+    && rm -f /var/run/apache2/apache2.pid
 
-# Pastikan folder upload foto bisa ditulis oleh Apache
-RUN chown -R www-data:www-data /var/www/html/public/uploads
+# Permission upload
+RUN mkdir -p /var/www/html/public/uploads \
+    && chown -R www-data:www-data /var/www/html/public/uploads
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
