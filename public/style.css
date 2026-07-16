@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f4f6f9;
+    overflow-x:hidden;
+}
+
+.navbar{
+    margin-left:250px;
+    width:calc(100% - 250px);
+}
+
+.sidebar{
+    width:250px;
+    height:100vh;
+    background:linear-gradient(180deg, #c40000, #8f0000);
+    position:fixed;
+    top:0;
+    left:0;
+    padding-top:80px;
+    transition:0.4s;
+    z-index:1000;
+    overflow-y:auto;
+}
+
+.sidebar .logo{
+    position:absolute;
+    top:15px;
+    left:20px;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:white;
+    text-decoration:none;
+    padding:15px 25px;
+    margin:8px 10px;
+    border-radius:12px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,0.15);
+    transform:translateX(5px);
+}
+
+.sidebar a.active{
+    background:white;
+    color:#b30000;
+    font-weight:600;
+}
+
+.sidebar i{
+    font-size:18px;
+}
+
+.content{
+    margin-left:250px;
+    padding:30px;
+    width:calc(100% - 250px);
+}
+
+.card{
+    border:none;
+    border-radius:20px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.table{
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.btn{
+    border-radius:10px;
+}
+
+@media(max-width:768px){
+    .sidebar{
+        width:80px;
+    }
+
+    .sidebar .text-menu,
+    .sidebar .logo{
+        display:none;
+    }
+
+    .content{
+        margin-left:80px;
+        width:calc(100% - 80px);
+    }
+
+    .navbar{
+        margin-left:80px;
+        width:calc(100% - 80px);
+    }
+
+    .sidebar a{
+        justify-content:center;
+    }
+}
